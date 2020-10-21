@@ -26,7 +26,7 @@ variable "user_name" {
   default     = "default"
 }
 
-variable "master_instance_full_name" {
+variable "full_name_master_instance" {
   description = "Full name of the master instance"
   type        = string
   default     = ""
