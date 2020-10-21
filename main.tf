@@ -10,7 +10,7 @@ locals {
     :
     format("mysql-%s-%s", var.name_master_instance, var.name_suffix)
   )
-  read_replica_name_suffix    = format("-%s-", var.name_read_replica)
+  read_replica_name_suffix = format("-%s-", var.name_read_replica)
   master_authorized_networks = [
     for authorized_network in var.authorized_networks_master_instance : {
       name  = authorized_network.display_name
