@@ -27,7 +27,7 @@ variable "user_name" {
 }
 
 variable "full_name_master_instance" {
-  description = "Full name of the master instance"
+  description = "Full name of the master instance. For backward-compatibility only. Not recommended for general use."
   type        = string
   default     = ""
 }
