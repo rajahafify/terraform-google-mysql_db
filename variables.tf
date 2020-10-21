@@ -26,6 +26,12 @@ variable "user_name" {
   default     = "default"
 }
 
+variable "full_name_master_instance" {
+  description = "Full name of the master instance. For backward-compatibility only. Not recommended for general use."
+  type        = string
+  default     = ""
+}
+
 variable "name_master_instance" {
   description = "Portion of name to be generated for the \"Master\" instance. The same name of a deleted master instance cannot be reused for up to 7 days. See https://cloud.google.com/sql/docs/mysql/delete-instance > notes."
   type        = string
