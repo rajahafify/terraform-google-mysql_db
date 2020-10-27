@@ -6,7 +6,7 @@ locals {
   master_instance_name = (
     var.full_name_master_instance != ""
     ?
-    format("%s-%s", var.full_name_master_instance, var.name_suffix)
+    var.full_name_master_instance
     :
     format("mysql-%s-%s", var.name_master_instance, var.name_suffix)
   )
