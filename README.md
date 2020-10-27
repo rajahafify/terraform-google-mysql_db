@@ -52,9 +52,12 @@ These incremental upgrades through `1.3.x` -> `1.4.1` -> `1.4.2` -> `1.4.3` will
    * the plan will show that your ReadReplica instance will be replaced - we want to avoid any kind of replacement
    * notice that the plan says a resource will be destroyed (let's say `resourceX`) and a new reource will be created (let's say `resourceY`)
    * notice the array index names
-      * `resourceX` will have array index `[0]` - although it may not show `[0]`
+      * `resourceX` has array index `[0]` - although it may not show `[0]`
       * `resourceY` will have array index with the new resource name
 * Use `terraform state mv` to manually move the state of `resourceX` to `resourceY`
+   * notice the array index names
+      * `resourceX` has array index `[0]` - although it may not show `[0]`
+      * `resourceY` will have array index with the new resource name
    * refer to https://www.terraform.io/docs/commands/state/mv.html to learn more about how to move Terraform state positions
    * once moved, it will say `Successfully moved 1 object(s).`
 * Run `terraform plan`
