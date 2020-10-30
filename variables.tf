@@ -76,13 +76,13 @@ variable "instance_size_read_replica" {
 
 variable "disk_size_gb_master_instance" {
   description = "Disk size for the master instance in Giga Bytes."
-  type        = string
+  type        = number
   default     = 10
 }
 
 variable "disk_size_gb_read_replica" {
   description = "Disk size for the read replica instance(s) in Giga Bytes."
-  type        = string
+  type        = number
   default     = 10
 }
 
