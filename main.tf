@@ -97,8 +97,8 @@ module "google_mysql_db" {
 }
 
 resource "google_project_iam_member" "cloudsql_proxy_user" {
-  count      = length(var.sql_proxy_user_groups)
+  for_each      = toset(var.sql_proxy_user_groups)
   role       = "roles/cloudsql.client" # see https://cloud.google.com/sql/docs/mysql/quickstart-proxy-test#before-you-begin
-  member     = "group:${var.sql_proxy_user_groups[count.index]}"
+  member     = "group:${each.value}"
   depends_on = [google_project_service.compute_api, google_project_service.cloudsql_api]
 }
