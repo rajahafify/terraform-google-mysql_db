@@ -37,29 +37,29 @@ resource "google_project_service" "cloudsql_api" {
 }
 
 module "google_mysql_db" {
-  source            = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version           = "4.3.0"
-  depends_on        = [google_project_service.compute_api, google_project_service.cloudsql_api]
+  source              = "GoogleCloudPlatform/sql-db/google//modules/mysql"
+  version             = "4.3.0"
+  depends_on          = [google_project_service.compute_api, google_project_service.cloudsql_api]
   deletion_protection = var.deletion_protection_master_instance
-  project_id        = data.google_client_config.google_client.project
-  name              = local.master_instance_name
-  db_name           = var.db_name
-  db_collation      = var.db_collation
-  db_charset        = var.db_charset
-  database_version  = var.db_version
-  region            = data.google_client_config.google_client.region
-  zone              = format("%s-%s", data.google_client_config.google_client.region, var.zone_master_instance)
-  availability_type = var.highly_available ? "REGIONAL" : null
-  tier              = var.instance_size_master_instance
-  disk_size         = var.disk_size_gb_master_instance
-  disk_autoresize   = var.disk_auto_resize_master_instance
-  disk_type         = "PD_SSD"
-  create_timeout    = var.db_timeout
-  update_timeout    = var.db_timeout
-  delete_timeout    = var.db_timeout
-  user_name         = var.user_name
-  database_flags    = local.db_flags_master_instance
-  user_labels       = var.user_labels_master_instance
+  project_id          = data.google_client_config.google_client.project
+  name                = local.master_instance_name
+  db_name             = var.db_name
+  db_collation        = var.db_collation
+  db_charset          = var.db_charset
+  database_version    = var.db_version
+  region              = data.google_client_config.google_client.region
+  zone                = format("%s-%s", data.google_client_config.google_client.region, var.zone_master_instance)
+  availability_type   = var.highly_available ? "REGIONAL" : null
+  tier                = var.instance_size_master_instance
+  disk_size           = var.disk_size_gb_master_instance
+  disk_autoresize     = var.disk_auto_resize_master_instance
+  disk_type           = "PD_SSD"
+  create_timeout      = var.db_timeout
+  update_timeout      = var.db_timeout
+  delete_timeout      = var.db_timeout
+  user_name           = var.user_name
+  database_flags      = local.db_flags_master_instance
+  user_labels         = var.user_labels_master_instance
   ip_configuration = {
     authorized_networks = local.master_authorized_networks
     ipv4_enabled        = var.public_access_master_instance
@@ -77,7 +77,7 @@ module "google_mysql_db" {
 
   # read replica settings
   read_replica_deletion_protection = var.deletion_protection_read_replica
-  read_replica_name_suffix = local.read_replica_name_suffix
+  read_replica_name_suffix         = local.read_replica_name_suffix
   read_replicas = [
     for array_index in range(var.read_replica_count) : {
       name = array_index
