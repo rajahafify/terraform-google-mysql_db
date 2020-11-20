@@ -38,7 +38,7 @@ resource "google_project_service" "cloudsql_api" {
 
 module "google_mysql_db" {
   source            = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version           = "4.0.0"
+  version           = "4.3.0"
   depends_on        = [google_project_service.compute_api, google_project_service.cloudsql_api]
   project_id        = data.google_client_config.google_client.project
   name              = local.master_instance_name
@@ -47,7 +47,7 @@ module "google_mysql_db" {
   db_charset        = var.db_charset
   database_version  = var.db_version
   region            = data.google_client_config.google_client.region
-  zone              = var.zone_master_instance
+  zone              = format("%s-%s", data.google_client_config.google_client.region, var.zone_master_instance)
   availability_type = var.highly_available ? "REGIONAL" : null
   tier              = var.instance_size_master_instance
   disk_size         = var.disk_size_gb_master_instance
