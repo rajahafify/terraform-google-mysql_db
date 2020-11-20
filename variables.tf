@@ -211,3 +211,15 @@ variable "sql_proxy_user_groups" {
   type        = list(string)
   default     = []
 }
+
+variable "deletion_protection_master_instance" {
+  description = "Used to prevent Terraform from deleting the master instance. Must apply with \"false\" first before attempting to delete in the next plan-apply."
+  type        = bool
+  default     = true
+}
+
+variable "deletion_protection_read_replica" {
+  description = "Used to prevent Terraform from deleting the ReadReplica. Must apply with \"false\" first before attempting to delete in the next plan-apply."
+  type        = bool
+  default     = true
+}

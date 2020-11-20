@@ -40,6 +40,7 @@ module "google_mysql_db" {
   source            = "GoogleCloudPlatform/sql-db/google//modules/mysql"
   version           = "4.3.0"
   depends_on        = [google_project_service.compute_api, google_project_service.cloudsql_api]
+  deletion_protection = var.deletion_protection_master_instance
   project_id        = data.google_client_config.google_client.project
   name              = local.master_instance_name
   db_name           = var.db_name
@@ -75,6 +76,7 @@ module "google_mysql_db" {
   }
 
   # read replica settings
+  read_replica_deletion_protection = var.deletion_protection_read_replica
   read_replica_name_suffix = local.read_replica_name_suffix
   read_replicas = [
     for array_index in range(var.read_replica_count) : {
