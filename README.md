@@ -4,7 +4,7 @@ Terraform module for a MySQL CloudSQL Instance in GCP
 
 First make sure you've planned & applied `v2.0.4`. Then, upon upgrading from `v2.0.4` to `v2.1.0`, you may (or may not) see a plan that destroys & creates an equal number of `google_project_iam_member` resources. It is OK to apply these changes as it will only change the data-structure of these resources [from an array to a hashmap](https://github.com/airasia/terraform-google-external_access/wiki/The-problem-of-%22shifting-all-items%22-in-an-array). Note that, after you plan & apply these changes, you may (or may not) get a **"Provider produced inconsistent result after apply"** error. Just re-plan and re-apply and that would resolve the error.
 
-## Upgrade guide to `v2.0.0`
+# Upgrade guide to v2.0.0
 
 `v2.0.0` uses **Terraform v0.13**. You must first upgrade this module through `v1.4.x` incrementally (see below), before you can proceed to upgrade to `v2.0.0`.
 
@@ -28,20 +28,21 @@ It's okay to run `terraform apply` with this plan, as the structure of dependenc
 
 ---
 
-## Upgrade guide through `v1.4.x`
+# Upgrade guide through v1.4.x
 
 These incremental upgrades through `1.3.x` -> `1.4.1` -> `1.4.2` -> `1.4.3` will prepare your module for upgrade to `v2.0.0` which uses the new **Terraform v0.13**.
 
-### Upgrading to `v1.4.1`
+### Upgrading to v1.4.1
 * Upgrade `mysql_db` module version to `1.4.1`
 * Remove all references of Failover replica from your Terrform configuration
 * Run `terraform plan`
    * the plan will show that it will remove the failover instance from your CloudSQL
 * Run `terraform apply`
-   * **no down-time is expected** - unless the GCP zone is (coincidentally) having any kind of outage during that time
+   * the **failover instance will be removed**
+   * **no down-time expected on master instance** - unless the GCP zone is (coincidentally) having any kind of outage during that time
    * consider the schedule when you apply this change in production
 
-### Upgrading to `v1.4.2`
+### Upgrading to v1.4.2
 * Upgrade `mysql_db` module version to `1.4.2`
 * Enable `var.highly_available = true` if you require Failover / High-Availability
 * Run `terraform plan`
@@ -50,7 +51,7 @@ These incremental upgrades through `1.3.x` -> `1.4.1` -> `1.4.2` -> `1.4.3` will
    * **down-time is expected** - the master instance undergoes a restart at this point
    * consider the schedule when you apply this change in production as your users may not be able to access your DB during this operation
 
-### Upgrading to `v1.4.3`
+### Upgrading to v1.4.3
 * Upgrade `mysql_db` module version to `1.4.3`
 * Run `terraform plan`
    * the plan will show that your ReadReplica instance will be replaced - we want to avoid any kind of replacement
