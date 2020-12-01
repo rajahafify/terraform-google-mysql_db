@@ -245,3 +245,13 @@ variable "additional_users" {
   }))
   default = []
 }
+
+variable "additional_databases" {
+  description = "A list of additional databases to be created in the CloudSQL instance"
+  type = list(object({
+    name      = string
+    charset   = string
+    collation = string
+  }))
+  default = []
+}
