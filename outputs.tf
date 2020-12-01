@@ -82,9 +82,9 @@ output "default_user_name" {
   value       = var.default_user_name
 }
 
-output "generated_user_password" {
-  description = "The auto generated default user password if not input password was provided"
-  value       = module.google_mysql_db.generated_user_password
+output "default_user_password" {
+  description = "The password of the default database user (auto-generated if var.default_user_password was not provided)"
+  value       = var.default_user_password != "" ? var.default_user_password : module.google_mysql_db.generated_user_password
   sensitive   = true
 }
 

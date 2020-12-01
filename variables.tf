@@ -26,6 +26,12 @@ variable "default_user_name" {
   default     = "default"
 }
 
+variable "default_user_password" {
+  description = "The password of the default database user. If not set (recommended to keep unset), a random password will be generated and will be available in the default_user_password output attribute."
+  type        = string
+  default     = ""
+}
+
 variable "full_name_master_instance" {
   description = "Full name of the master instance. For backward-compatibility only. Not recommended for general use."
   type        = string
