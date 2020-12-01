@@ -62,6 +62,12 @@ variable "db_version" {
   default     = "MYSQL_5_7"
 }
 
+variable "db_name" {
+  description = "Name of the default database to be created."
+  type        = string
+  default     = "default"
+}
+
 variable "db_charset" {
   description = "The charset for the MySQL database."
   type        = string
@@ -204,12 +210,6 @@ variable "labels_read_replica" {
   description = "Key/value labels for the ReadReplica instance(s)."
   type        = map(string)
   default     = {}
-}
-
-variable "db_name" {
-  description = "Name of the default database to be created."
-  type        = string
-  default     = "default"
 }
 
 variable "db_timeout" {
