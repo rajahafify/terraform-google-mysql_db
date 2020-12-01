@@ -235,3 +235,13 @@ variable "deletion_protection_read_replica" {
   type        = bool
   default     = true
 }
+
+variable "additional_users" {
+  description = "A list of additional users to be created in the CloudSQL instance"
+  type = list(object({
+    name     = string
+    password = string
+    host     = string
+  }))
+  default = []
+}

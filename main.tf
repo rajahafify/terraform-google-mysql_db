@@ -62,6 +62,7 @@ module "google_mysql_db" {
   user_host           = var.default_user_host
   database_flags      = local.db_flags_master_instance
   user_labels         = var.labels_master_instance
+  additional_users    = var.additional_users
   ip_configuration = {
     authorized_networks = local.master_authorized_networks
     ipv4_enabled        = var.public_access_master_instance
