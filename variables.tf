@@ -20,7 +20,7 @@ variable "private_network" {
 # OPTIONAL PARAMETERS
 # ----------------------------------------------------------------------------------------------------------------------
 
-variable "user_name" {
+variable "default_user_name" {
   description = "The name of the default database user."
   type        = string
   default     = "default"

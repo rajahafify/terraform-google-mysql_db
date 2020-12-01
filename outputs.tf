@@ -77,9 +77,9 @@ output "read_replica_instance_names" {
   description = "The instance names for the read replica instances"
 }
 
-output "user_name" {
-  description = "The name of the database user"
-  value       = var.user_name
+output "default_user_name" {
+  description = "The name of the default database user"
+  value       = var.default_user_name
 }
 
 output "generated_user_password" {
