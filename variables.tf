@@ -62,20 +62,20 @@ variable "db_version" {
   default     = "MYSQL_5_7"
 }
 
-variable "db_name" {
+variable "default_db_name" {
   description = "Name of the default database to be created."
   type        = string
   default     = "default"
 }
 
-variable "db_charset" {
-  description = "The charset for the MySQL database."
+variable "default_db_charset" {
+  description = "The charset for the default database."
   type        = string
   default     = "utf8"
 }
 
-variable "db_collation" {
-  description = "The collation for the MySQL database."
+variable "default_db_collation" {
+  description = "The collation for the default database."
   type        = string
   default     = "utf8_general_ci"
 }

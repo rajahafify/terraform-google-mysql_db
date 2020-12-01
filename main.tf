@@ -43,9 +43,9 @@ module "google_mysql_db" {
   deletion_protection  = var.deletion_protection_master_instance
   project_id           = data.google_client_config.google_client.project
   name                 = local.master_instance_name
-  db_name              = var.db_name
-  db_collation         = var.db_collation
-  db_charset           = var.db_charset
+  db_name              = var.default_db_name
+  db_collation         = var.default_db_collation
+  db_charset           = var.default_db_charset
   database_version     = var.db_version
   region               = data.google_client_config.google_client.region
   zone                 = format("%s-%s", data.google_client_config.google_client.region, var.zone_master_instance)
