@@ -194,13 +194,13 @@ variable "db_flags_read_replica" {
   default     = {}
 }
 
-variable "user_labels_master_instance" {
+variable "labels_master_instance" {
   description = "Key/value labels for the master instance."
   type        = map(string)
   default     = {}
 }
 
-variable "user_labels_read_replica" {
+variable "labels_read_replica" {
   description = "Key/value labels for the ReadReplica instance(s)."
   type        = map(string)
   default     = {}

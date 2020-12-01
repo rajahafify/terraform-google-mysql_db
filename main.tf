@@ -61,7 +61,7 @@ module "google_mysql_db" {
   user_password       = var.default_user_password
   user_host           = var.default_user_host
   database_flags      = local.db_flags_master_instance
-  user_labels         = var.user_labels_master_instance
+  user_labels         = var.labels_master_instance
   ip_configuration = {
     authorized_networks = local.master_authorized_networks
     ipv4_enabled        = var.public_access_master_instance
@@ -95,7 +95,7 @@ module "google_mysql_db" {
       disk_autoresize = var.disk_auto_resize_read_replica
       disk_size       = var.disk_size_gb_read_replica
       disk_type       = "PD_SSD"
-      user_labels     = var.user_labels_read_replica
+      user_labels     = var.labels_read_replica
     }
   ]
 }
