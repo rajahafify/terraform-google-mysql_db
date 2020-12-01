@@ -88,6 +88,11 @@ output "default_user_password" {
   sensitive   = true
 }
 
+output "default_user_host" {
+  description = "The host of the default database user"
+  value       = var.default_user_host
+}
+
 output "public_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
   value       = module.google_mysql_db.public_ip_address

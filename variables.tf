@@ -32,6 +32,12 @@ variable "default_user_password" {
   default     = ""
 }
 
+variable "default_user_host" {
+  description = "The host of the default database user"
+  type        = string
+  default     = "%"
+}
+
 variable "full_name_master_instance" {
   description = "Full name of the master instance. For backward-compatibility only. Not recommended for general use."
   type        = string
