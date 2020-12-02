@@ -57,9 +57,9 @@ module "google_mysql_db" {
   create_timeout       = var.db_timeout
   update_timeout       = var.db_timeout
   delete_timeout       = var.db_timeout
-  user_name            = var.default_user_name
-  user_password        = var.default_user_password
-  user_host            = var.default_user_host
+  user_name            = var.root_user_name
+  user_password        = var.root_user_password
+  user_host            = var.root_user_host
   database_flags       = local.db_flags_master_instance
   user_labels          = var.labels_master_instance
   additional_users     = var.additional_users
