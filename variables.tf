@@ -20,10 +20,22 @@ variable "private_network" {
 # OPTIONAL PARAMETERS
 # ----------------------------------------------------------------------------------------------------------------------
 
-variable "user_name" {
+variable "root_user_name" {
   description = "The name of the default database user."
   type        = string
-  default     = "default"
+  default     = "root"
+}
+
+variable "root_user_password" {
+  description = "The password of the default database user. If not set (recommended to keep unset), a random password will be generated and will be available in the root_user_password output attribute."
+  type        = string
+  default     = ""
+}
+
+variable "root_user_host" {
+  description = "The host of the default database user"
+  type        = string
+  default     = "%"
 }
 
 variable "full_name_master_instance" {
@@ -50,14 +62,20 @@ variable "db_version" {
   default     = "MYSQL_5_7"
 }
 
-variable "db_charset" {
-  description = "The charset for the MySQL database."
+variable "default_db_name" {
+  description = "Name of the default database to be created."
+  type        = string
+  default     = "default"
+}
+
+variable "default_db_charset" {
+  description = "The charset for the default database."
   type        = string
   default     = "utf8"
 }
 
-variable "db_collation" {
-  description = "The collation for the MySQL database."
+variable "default_db_collation" {
+  description = "The collation for the default database."
   type        = string
   default     = "utf8_general_ci"
 }
@@ -182,22 +200,16 @@ variable "db_flags_read_replica" {
   default     = {}
 }
 
-variable "user_labels_master_instance" {
+variable "labels_master_instance" {
   description = "Key/value labels for the master instance."
   type        = map(string)
   default     = {}
 }
 
-variable "user_labels_read_replica" {
+variable "labels_read_replica" {
   description = "Key/value labels for the ReadReplica instance(s)."
   type        = map(string)
   default     = {}
-}
-
-variable "db_name" {
-  description = "Name of the default database to be created."
-  type        = string
-  default     = "default"
 }
 
 variable "db_timeout" {
@@ -222,4 +234,24 @@ variable "deletion_protection_read_replica" {
   description = "Used to prevent Terraform from deleting the ReadReplica. Must apply with \"false\" first before attempting to delete in the next plan-apply."
   type        = bool
   default     = true
+}
+
+variable "additional_users" {
+  description = "A list of additional users to be created in the CloudSQL instance"
+  type = list(object({
+    name     = string
+    password = string
+    host     = string
+  }))
+  default = []
+}
+
+variable "additional_databases" {
+  description = "A list of additional databases to be created in the CloudSQL instance"
+  type = list(object({
+    name      = string
+    charset   = string
+    collation = string
+  }))
+  default = []
 }
