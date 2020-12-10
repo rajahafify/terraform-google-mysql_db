@@ -21,19 +21,19 @@ variable "private_network" {
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "root_user_name" {
-  description = "The name of the default database user."
+  description = "The name of the root user."
   type        = string
   default     = "root"
 }
 
 variable "root_user_password" {
-  description = "The password of the default database user. If not set (recommended to keep unset), a random password will be generated and will be available in the root_user_password output attribute."
+  description = "The password of the root user. If not set (recommended to keep unset), a random password will be generated and will be available in the root_user_password output attribute."
   type        = string
   default     = ""
 }
 
 variable "root_user_host" {
-  description = "The host of the default database user"
+  description = "The host of the root user"
   type        = string
   default     = "%"
 }

@@ -78,18 +78,18 @@ output "read_replica_instance_names" {
 }
 
 output "root_user_name" {
-  description = "The name of the default database user"
+  description = "The name of the root user"
   value       = var.root_user_name
 }
 
 output "root_user_password" {
-  description = "The password of the default database user (auto-generated if var.root_user_password was not provided)"
+  description = "The password of the root user (auto-generated if var.root_user_password was not provided)"
   value       = var.root_user_password != "" ? var.root_user_password : module.google_mysql_db.generated_user_password
   sensitive   = true
 }
 
 output "root_user_host" {
-  description = "The host of the default database user"
+  description = "The host of the root user"
   value       = var.root_user_host
 }
 
