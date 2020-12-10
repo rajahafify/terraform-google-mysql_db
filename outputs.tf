@@ -93,6 +93,11 @@ output "root_user_host" {
   value       = var.root_user_host
 }
 
+output "additional_users" {
+  description = "The additional_users that were passed into this module."
+  value       = var.additional_users
+}
+
 output "public_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
   value       = module.google_mysql_db.public_ip_address
