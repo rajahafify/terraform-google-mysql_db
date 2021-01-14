@@ -13,6 +13,7 @@ locals {
       value = authorized_network.cidr_block
     }
   ]
+  default_region = data.google_client_config.google_client.region
   read_replica_authorized_networks = [
     for authorized_network in var.authorized_networks_read_replica : {
       name  = authorized_network.display_name
@@ -21,7 +22,7 @@ locals {
   ]
   db_flags_master_instance = [for key, val in var.db_flags_master_instance : { name = key, value = val }]
   db_flags_read_replica    = [for key, val in var.db_flags_read_replica : { name = key, value = val }]
-  backup_location          = var.backup_location == "" ? data.google_client_config.google_client.region : var.backup_location
+  backup_location          = var.backup_location == "" ? local.default_region : var.backup_location
 }
 
 data "google_client_config" "google_client" {}
@@ -47,8 +48,8 @@ module "google_mysql_db" {
   db_collation         = var.default_db_collation
   db_charset           = var.default_db_charset
   database_version     = var.db_version
-  region               = data.google_client_config.google_client.region
-  zone                 = format("%s-%s", data.google_client_config.google_client.region, var.zone_master_instance)
+  region               = local.default_region
+  zone                 = format("%s-%s", local.default_region, var.zone_master_instance)
   availability_type    = var.highly_available ? "REGIONAL" : null
   tier                 = var.instance_size_master_instance
   disk_size            = var.disk_size_gb_master_instance
@@ -86,7 +87,7 @@ module "google_mysql_db" {
     for array_index in range(var.read_replica_count) : {
       name = array_index
       tier = var.instance_size_read_replica
-      zone = format("%s-%s", data.google_client_config.google_client.region, var.zone_read_replica)
+      zone = format("%s-%s", local.default_region, var.zone_read_replica)
       ip_configuration = {
         authorized_networks = local.read_replica_authorized_networks
         ipv4_enabled        = var.public_access_read_replica
