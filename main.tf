@@ -15,6 +15,7 @@ locals {
   ]
   default_region = data.google_client_config.google_client.region
   region_master_instance = coalesce(var.region_master_instance, local.default_region)
+  region_read_replica = coalesce(var.region_read_replica, local.region_master_instance)
   read_replica_authorized_networks = [
     for authorized_network in var.authorized_networks_read_replica : {
       name  = authorized_network.display_name
@@ -88,7 +89,7 @@ module "google_mysql_db" {
     for array_index in range(var.read_replica_count) : {
       name = array_index
       tier = var.instance_size_read_replica
-      zone = format("%s-%s", local.region_master_instance, var.zone_read_replica)
+      zone = format("%s-%s", local.region_read_replica, var.zone_read_replica)
       ip_configuration = {
         authorized_networks = local.read_replica_authorized_networks
         ipv4_enabled        = var.public_access_read_replica
