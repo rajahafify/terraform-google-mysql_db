@@ -13,11 +13,11 @@ locals {
       value = authorized_network.cidr_block
     }
   ]
-  default_region = data.google_client_config.google_client.region
+  default_region         = data.google_client_config.google_client.region
   region_master_instance = coalesce(var.region_master_instance, local.default_region)
-  region_read_replica = coalesce(var.region_read_replica, local.region_master_instance)
-  zone_master_instance = format("%s-%s", local.region_master_instance, var.zone_master_instance)
-  zone_read_replica = format("%s-%s", local.region_read_replica, var.zone_read_replica)
+  region_read_replica    = coalesce(var.region_read_replica, local.region_master_instance)
+  zone_master_instance   = format("%s-%s", local.region_master_instance, var.zone_master_instance)
+  zone_read_replica      = format("%s-%s", local.region_read_replica, var.zone_read_replica)
   read_replica_authorized_networks = [
     for authorized_network in var.authorized_networks_read_replica : {
       name  = authorized_network.display_name
