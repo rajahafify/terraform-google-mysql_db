@@ -26,7 +26,7 @@ locals {
   ]
   db_flags_master_instance = [for key, val in var.db_flags_master_instance : { name = key, value = val }]
   db_flags_read_replica    = [for key, val in var.db_flags_read_replica : { name = key, value = val }]
-  backup_location          = var.backup_location == "" ? local.region_master_instance : var.backup_location
+  backup_location          = coalesce(var.backup_location, local.region_master_instance)
 }
 
 data "google_client_config" "google_client" {}
