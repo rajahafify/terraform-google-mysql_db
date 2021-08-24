@@ -267,3 +267,21 @@ variable "additional_databases" {
   }))
   default = []
 }
+
+variable "maintenance_window" {
+  description = <<-EOT
+  day: The day of week (1-7), starting on Monday.
+  hour: The hour of day (0-23), ignored if day not set.
+  update_track: The update track of maintenance window. Can be either `canary` or `stable`.
+  EOT
+  type = object({
+    day_utc      = number
+    hour_utc     = number
+    update_track = string
+  })
+  default = {
+    day_utc      = 1  # implies Tuesday in MYT
+    hour_utc     = 19 # implies 3AM in MYT
+    update_track = "canary"
+  }
+}
