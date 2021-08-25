@@ -270,7 +270,7 @@ variable "additional_databases" {
 
 variable "maintenance_window" {
   description = <<-EOT
-  day: The day of week (1-7), starting on Monday.
+  day_utc: The day of the week (1-7) in UTC timezone - starting from Monday.
   hour: The hour of day (0-23), ignored if day not set.
   update_track: The update track of maintenance window. Can be either `canary` or `stable`.
   EOT
