@@ -280,8 +280,8 @@ variable "maintenance_window" {
     update_track = string
   })
   default = {
-    day_utc      = 1  # implies Tuesday in MYT
-    hour_utc     = 19 # implies 3AM in MYT
-    update_track = "canary"
+    day_utc      = 1
+    hour_utc     = 19
+    update_track = "stable"
   }
 }
