@@ -43,7 +43,7 @@ resource "google_project_service" "cloudsql_api" {
 
 module "google_mysql_db" {
   source                          = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version                         = "4.5.0"
+  version                         = "9.0.0"
   depends_on                      = [google_project_service.compute_api, google_project_service.cloudsql_api]
   deletion_protection             = var.deletion_protection_master_instance
   project_id                      = data.google_client_config.google_client.project
@@ -81,10 +81,13 @@ module "google_mysql_db" {
 
   # backup settings
   backup_configuration = {
-    enabled            = var.backup_enabled
-    binary_log_enabled = var.pit_recovery_enabled
-    start_time         = "00:05"
-    location           = local.backup_location
+    enabled                        = var.backup_enabled
+    binary_log_enabled             = var.pit_recovery_enabled
+    start_time                     = "00:05"
+    location                       = local.backup_location
+    transaction_log_retention_days = null
+    retained_backups               = null
+    retention_unit                 = null
   }
 
   # read replica settings
@@ -101,17 +104,19 @@ module "google_mysql_db" {
         private_network     = var.private_network
         require_ssl         = null
       }
-      database_flags  = local.db_flags_read_replica
-      disk_autoresize = var.disk_auto_resize_read_replica
-      disk_size       = var.disk_size_gb_read_replica
-      disk_type       = "PD_SSD"
-      user_labels     = var.labels_read_replica
+      database_flags      = local.db_flags_read_replica
+      disk_autoresize     = var.disk_auto_resize_read_replica
+      disk_size           = var.disk_size_gb_read_replica
+      disk_type           = "PD_SSD"
+      user_labels         = var.labels_read_replica
+      encryption_key_name = null
     }
   ]
 }
 
 resource "google_project_iam_member" "cloudsql_proxy_user" {
   for_each   = toset(var.sql_proxy_user_groups)
+  project  = data.google_client_config.google_client.project
   role       = "roles/cloudsql.client" # see https://cloud.google.com/sql/docs/mysql/quickstart-proxy-test#before-you-begin
   member     = "group:${each.value}"
   depends_on = [google_project_service.compute_api, google_project_service.cloudsql_api]
