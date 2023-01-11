@@ -43,7 +43,7 @@ resource "google_project_service" "cloudsql_api" {
 
 module "google_mysql_db" {
   source                          = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version                         = "9.0.0"
+  version                         = "13.0.0"
   depends_on                      = [google_project_service.compute_api, google_project_service.cloudsql_api]
   deletion_protection             = var.deletion_protection_master_instance
   project_id                      = data.google_client_config.google_client.project
@@ -77,6 +77,7 @@ module "google_mysql_db" {
     ipv4_enabled        = var.public_access_master_instance
     private_network     = var.private_network
     require_ssl         = null
+    allocated_ip_range  = var.allocated_ip_range
   }
 
   # backup settings
@@ -89,7 +90,11 @@ module "google_mysql_db" {
     retained_backups               = null
     retention_unit                 = null
   }
-
+  insights_config = {
+    query_string_length     = var.insights_config.query_string_length
+    record_application_tags = var.insights_config.record_application_tags
+    record_client_address   = var.insights_config.record_client_address
+  }
   # read replica settings
   read_replica_deletion_protection = var.deletion_protection_read_replica
   read_replica_name_suffix         = local.read_replica_name_suffix
