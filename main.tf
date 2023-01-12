@@ -113,8 +113,8 @@ module "google_mysql_db" {
       disk_size             = var.disk_size_gb_read_replica
       disk_type             = "PD_SSD"
       availability_type     = var.highly_available_read_replica ? "REGIONAL" : "ZONAL"
-      user_labels           = var.labels_read_replica
-      encryption_key_name   = var.encryption_key_name_read_replica
+      user_labels         = var.labels_read_replica
+      encryption_key_name = var.encryption_key_name_read_replica
     }
   ]
 }
