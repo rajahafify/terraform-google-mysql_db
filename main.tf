@@ -72,6 +72,7 @@ module "google_mysql_db" {
   maintenance_window_day          = var.maintenance_window.day_utc
   maintenance_window_hour         = var.maintenance_window.hour_utc
   maintenance_window_update_track = var.maintenance_window.update_track
+  insights_config                 = var.insights_config
   ip_configuration = {
     authorized_networks = local.master_authorized_networks
     ipv4_enabled        = var.public_access_master_instance
@@ -89,11 +90,6 @@ module "google_mysql_db" {
     transaction_log_retention_days = null
     retained_backups               = null
     retention_unit                 = null
-  }
-  insights_config = {
-    query_string_length     = var.insights_config.query_string_length
-    record_application_tags = var.insights_config.record_application_tags
-    record_client_address   = var.insights_config.record_client_address
   }
   # read replica settings
   read_replica_deletion_protection = var.deletion_protection_read_replica

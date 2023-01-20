@@ -195,10 +195,11 @@ variable "public_access_master_instance" {
 }
 
 variable "allocated_ip_range" {
-  description = "For MYSQL db, adding this property to Cloud SQL modules will allow users to select a specific allocated range for their private instances."
+  description = "Allow users to select a specific IP range for their private instances"
   type        = string
   default     = null
 }
+
 variable "public_access_read_replica" {
   description = "Whether public IPv4 address should be assigned to the MySQL read-replica instance(s). If set to 'false' then 'var.private_network' must be defined."
   type        = bool
@@ -292,10 +293,6 @@ variable "maintenance_window" {
   }
 }
 
-# ----------------------------------------------------------------------------------------------------------------------
-# To enable Query Insights
-# ----------------------------------------------------------------------------------------------------------------------
-
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
@@ -303,9 +300,5 @@ variable "insights_config" {
     record_application_tags = bool
     record_client_address   = bool
   })
-  default = {
-    query_string_length     = 1024
-    record_application_tags = false
-    record_client_address   = false
-  }
+  default = null
 }
