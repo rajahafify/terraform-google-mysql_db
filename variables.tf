@@ -115,7 +115,11 @@ variable "disk_auto_resize_read_replica" {
   type        = bool
   default     = false
 }
-
+variable "disk_autoresize_limit" {
+  description = "Allows users to set a specific limit on how large the storage on their instance can automatically grow. The default value is zero, which means there is no limit and disk size can grow up to the maximum available storage for the instance tier. Applying the automatic disk increase limit does not cause any disruptions to your database workload."
+  type        = number
+  default     = 0
+}
 variable "backup_enabled" {
   description = "Specify whether backups should be enabled for the MySQL instance."
   type        = bool
@@ -138,6 +142,12 @@ variable "highly_available" {
   description = "Whether the MySQL instance should be highly available (REGIONAL) or single zone. Highly Available (HA) instances will automatically failover to another zone within the region if there is an outage of the primary zone. HA instances are recommended for production use-cases and increase cost. Value of 'true' requires 'var.pit_recovery_enabled' to be 'true'."
   type        = bool
   default     = false
+}
+
+variable "read_replica_availability_type" {
+  description = "Set the availability type of their read replicas as ZONAL or REGIONAL"
+  type        = string
+  default     = "ZONAL"
 }
 
 variable "read_replica_count" {
