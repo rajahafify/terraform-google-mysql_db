@@ -105,14 +105,14 @@ module "google_mysql_db" {
         private_network     = var.private_network
         require_ssl         = null
       }
-      database_flags      = local.db_flags_read_replica
-      disk_autoresize     = var.disk_auto_resize_read_replica
+      database_flags        = local.db_flags_read_replica
+      disk_autoresize       = var.disk_auto_resize_read_replica
       disk_autoresize_limit = var.disk_autoresize_limit
-      disk_size           = var.disk_size_gb_read_replica
-      disk_type           = "PD_SSD"
-      availability_type   = var.read_replica_availability_type
-      user_labels         = var.labels_read_replica
-      encryption_key_name = null
+      disk_size             = var.disk_size_gb_read_replica
+      disk_type             = "PD_SSD"
+      availability_type     = var.read_replica_availability_type
+      user_labels           = var.labels_read_replica
+      encryption_key_name   = null
     }
   ]
 }
