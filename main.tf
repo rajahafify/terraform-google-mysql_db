@@ -113,7 +113,7 @@ module "google_mysql_db" {
       availability_type     = var.read_replica_availability_type
       user_labels           = var.labels_read_replica
       encryption_key_name   = null
-      allocated_ip_range    = var.allocated_ip_range
+      allocated_ip_range    = var.read_replica_pvt_ip_range
     }
   ]
 }
