@@ -104,6 +104,7 @@ module "google_mysql_db" {
         ipv4_enabled        = var.public_access_read_replica
         private_network     = var.private_network
         require_ssl         = null
+        allocated_ip_range  = var.read_replica_pvt_ip_range
       }
       database_flags        = local.db_flags_read_replica
       disk_autoresize       = var.disk_auto_resize_read_replica
@@ -113,7 +114,6 @@ module "google_mysql_db" {
       availability_type     = var.read_replica_availability_type
       user_labels           = var.labels_read_replica
       encryption_key_name   = null
-      allocated_ip_range    = var.read_replica_pvt_ip_range
     }
   ]
 }
