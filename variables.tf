@@ -211,7 +211,7 @@ variable "public_access_master_instance" {
 }
 
 variable "allocated_ip_range" {
-  description = "Allow users to select a specific IP range for their private instances"
+  description = "Allow users to select a specific IP range for their private instances. private_g_services: A CIDR range (/20 advised) for Google services producers (like CloudSQL, Firebase, etc) in private subnet of the VPC. See https://cloud.google.com/vpc/docs/configure-private-services-access#allocating-range. See https://cloud.google.com/sql/docs/mysql/configure-private-services-access#configure-access."
   type        = string
   default     = null
 }
