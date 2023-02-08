@@ -211,7 +211,12 @@ variable "public_access_master_instance" {
 }
 
 variable "allocated_ip_range" {
-  description = "Allow users to select a specific IP range for their private instances. private_g_services: A CIDR range (/20 advised) for Google services producers (like CloudSQL, Firebase, etc) in private subnet of the VPC. See https://cloud.google.com/vpc/docs/configure-private-services-access#allocating-range. See https://cloud.google.com/sql/docs/mysql/configure-private-services-access#configure-access."
+  description = <<-EOT
+  The name of the allocated ip range for the private ip CloudSQL instance. 
+  For example: "google-managed-services-default". If set, the instance ip will be created in the allocated range. 
+  The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long and match the regular expression a-z?. 
+  If set, a CIDR range of /20 is advised.
+  EOT
   type        = string
   default     = null
 }
