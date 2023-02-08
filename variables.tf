@@ -279,7 +279,11 @@ variable "additional_users" {
   }))
   default = []
 }
-
+variable "encryption_key_name_read_replica" {
+  description = "Encryption key is required for replicas in different regions. For replicas in same region as master, set encryption_key_name = null"
+  type        = string
+  default     = null
+}
 variable "additional_databases" {
   description = "A list of additional databases to be created in the CloudSQL instance"
   type = list(object({

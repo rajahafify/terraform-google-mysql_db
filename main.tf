@@ -113,7 +113,7 @@ module "google_mysql_db" {
       disk_type             = "PD_SSD"
       availability_type     = var.read_replica_availability_type
       user_labels           = var.labels_read_replica
-      encryption_key_name   = null
+      encryption_key_name   = var.encryption_key_name_read_replica
     }
   ]
 }
