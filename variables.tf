@@ -144,10 +144,10 @@ variable "highly_available" {
   default     = false
 }
 
-variable "read_replica_availability_type" {
-  description = "Set the availability type of their read replicas as ZONAL or REGIONAL"
-  type        = string
-  default     = "ZONAL"
+variable "highly_available_read_replica" {
+  description = "Whether the MySQL instance should be highly available REGIONAL or ZONAL. Highly Available (HA) instances will automatically failover to another zone within the region if there is an outage of the primary zone. HA instances are recommended for production use-cases and increase cost"
+  type        = bool
+  default     = false
 }
 
 variable "read_replica_count" {
