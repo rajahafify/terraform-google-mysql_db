@@ -91,6 +91,7 @@ module "google_mysql_db" {
     retained_backups               = null
     retention_unit                 = null
   }
+
   # read replica settings
   read_replica_deletion_protection = var.deletion_protection_read_replica
   read_replica_name_suffix         = local.read_replica_name_suffix
@@ -104,11 +105,11 @@ module "google_mysql_db" {
         ipv4_enabled        = var.public_access_read_replica
         private_network     = var.private_network
         require_ssl         = null
-        allocated_ip_range  = var.read_replica_pvt_ip_range
+        allocated_ip_range  = var.allocated_ip_range_read_replica
       }
       database_flags        = local.db_flags_read_replica
       disk_autoresize       = var.disk_auto_resize_read_replica
-      disk_autoresize_limit = var.disk_autoresize_limit
+      disk_autoresize_limit = var.disk_autoresize_limit_read_replica
       disk_size             = var.disk_size_gb_read_replica
       disk_type             = "PD_SSD"
       availability_type     = var.highly_available_read_replica ? "REGIONAL" : "ZONAL"

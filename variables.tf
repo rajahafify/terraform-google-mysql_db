@@ -115,8 +115,8 @@ variable "disk_auto_resize_read_replica" {
   type        = bool
   default     = false
 }
-variable "disk_autoresize_limit" {
-  description = "Allows users to set a specific limit on how large the storage on their instance can automatically grow. The default value is zero, which means there is no limit and disk size can grow up to the maximum available storage for the instance tier. Applying the automatic disk increase limit does not cause any disruptions to your database workload."
+variable "disk_autoresize_limit_read_replica" {
+  description = "Allows users to set a specific limit on how large the storage on their instance can automatically grow up to. The default value is zero, which means there is no limit and disk size can grow up to the maximum available storage for the instance tier. Applying the automatic disk increase limit does not cause any disruptions to your database workload."
   type        = number
   default     = 0
 }
@@ -145,7 +145,7 @@ variable "highly_available" {
 }
 
 variable "highly_available_read_replica" {
-  description = "Whether the MySQL instance should be highly available REGIONAL or ZONAL. Highly Available (HA) instances will automatically failover to another zone within the region if there is an outage of the primary zone. HA instances are recommended for production use-cases and increase cost"
+  description = "Whether the MySQL instance should be highly available (REGIONAL) or not (ZONAL). Highly Available (HA) instances will automatically failover to another zone within the region if there is an outage of the primary zone. HA instances are recommended for production use-cases and, therefore, increase cost"
   type        = bool
   default     = false
 }
@@ -156,8 +156,14 @@ variable "read_replica_count" {
   default     = 0
 }
 
-variable "read_replica_pvt_ip_range" {
-  description = "The name of the allocated ip range for the private ip CloudSQL instance. For example: google-managed-services-default. If set, the instance ip will be created in the allocated range. The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long and match the regular expression a-z?"
+variable "allocated_ip_range_read_replica" {
+  description = <<-EOT
+  The name of the allocated ip range for the private ip CloudSQL instance. 
+  If already available this can be derived from VPC -> Private Service Connection -> Name of the allocated range
+  For example: "google-managed-services-default". If set, the instance ip will be created in the allocated range. 
+  The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long and match the regular expression a-z?. 
+  If set, a CIDR range of /20 is advised.
+  EOT
   type        = string
   default     = null
 }
@@ -213,6 +219,7 @@ variable "public_access_master_instance" {
 variable "allocated_ip_range" {
   description = <<-EOT
   The name of the allocated ip range for the private ip CloudSQL instance. 
+  If already available this can be derived from VPC -> Private Service Connection -> Name of the allocated range
   For example: "google-managed-services-default". If set, the instance ip will be created in the allocated range. 
   The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long and match the regular expression a-z?. 
   If set, a CIDR range of /20 is advised.
@@ -289,6 +296,7 @@ variable "encryption_key_name_read_replica" {
   type        = string
   default     = null
 }
+
 variable "additional_databases" {
   description = "A list of additional databases to be created in the CloudSQL instance"
   type = list(object({
