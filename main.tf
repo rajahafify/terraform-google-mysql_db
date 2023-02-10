@@ -43,7 +43,7 @@ resource "google_project_service" "cloudsql_api" {
 
 module "google_mysql_db" {
   source                          = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version                         = "9.0.0"
+  version                         = "13.0.1"
   depends_on                      = [google_project_service.compute_api, google_project_service.cloudsql_api]
   deletion_protection             = var.deletion_protection_master_instance
   project_id                      = data.google_client_config.google_client.project
@@ -72,11 +72,13 @@ module "google_mysql_db" {
   maintenance_window_day          = var.maintenance_window.day_utc
   maintenance_window_hour         = var.maintenance_window.hour_utc
   maintenance_window_update_track = var.maintenance_window.update_track
+  insights_config                 = var.insights_config
   ip_configuration = {
     authorized_networks = local.master_authorized_networks
     ipv4_enabled        = var.public_access_master_instance
     private_network     = var.private_network
     require_ssl         = null
+    allocated_ip_range  = var.allocated_ip_range
   }
 
   # backup settings
@@ -103,13 +105,16 @@ module "google_mysql_db" {
         ipv4_enabled        = var.public_access_read_replica
         private_network     = var.private_network
         require_ssl         = null
+        allocated_ip_range  = var.allocated_ip_range_read_replica
       }
-      database_flags      = local.db_flags_read_replica
-      disk_autoresize     = var.disk_auto_resize_read_replica
-      disk_size           = var.disk_size_gb_read_replica
-      disk_type           = "PD_SSD"
-      user_labels         = var.labels_read_replica
-      encryption_key_name = null
+      database_flags        = local.db_flags_read_replica
+      disk_autoresize       = var.disk_auto_resize_read_replica
+      disk_autoresize_limit = var.disk_autoresize_limit_read_replica
+      disk_size             = var.disk_size_gb_read_replica
+      disk_type             = "PD_SSD"
+      availability_type     = var.highly_available_read_replica ? "REGIONAL" : "ZONAL"
+      user_labels           = var.labels_read_replica
+      encryption_key_name   = var.encryption_key_name_read_replica
     }
   ]
 }

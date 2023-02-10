@@ -115,7 +115,11 @@ variable "disk_auto_resize_read_replica" {
   type        = bool
   default     = false
 }
-
+variable "disk_autoresize_limit_read_replica" {
+  description = "Allows users to set a specific limit on how large the storage on their instance can automatically grow up to. The default value is zero, which means there is no limit and disk size can grow up to the maximum available storage for the instance tier. Applying the automatic disk increase limit does not cause any disruptions to your database workload."
+  type        = number
+  default     = 0
+}
 variable "backup_enabled" {
   description = "Specify whether backups should be enabled for the MySQL instance."
   type        = bool
@@ -140,10 +144,28 @@ variable "highly_available" {
   default     = false
 }
 
+variable "highly_available_read_replica" {
+  description = "Whether the MySQL instance should be highly available (REGIONAL) or not (ZONAL). Highly Available (HA) instances will automatically failover to another zone within the region if there is an outage of the primary zone. HA instances are recommended for production use-cases and, therefore, increase cost"
+  type        = bool
+  default     = false
+}
+
 variable "read_replica_count" {
   description = "Specify the number of read replicas for the MySQL instance. Value greater than 0 requires 'var.pit_recovery_enabled' to be 'true'."
   type        = number
   default     = 0
+}
+
+variable "allocated_ip_range_read_replica" {
+  description = <<-EOT
+  The name of the allocated IP range for the private IP of read replicas of the CloudSQL instance. 
+  If already available this can be derived from VPC -> Private Service Connection -> Name of the allocated range. For example: "google-managed-services-default".
+  If set, the IP will be created within the allocated IP range. 
+  The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long and match the regular expression a-z?. 
+  If set, a CIDR range of /20 is advised.
+  EOT
+  type        = string
+  default     = null
 }
 
 variable "authorized_networks_master_instance" {
@@ -192,6 +214,18 @@ variable "public_access_master_instance" {
   description = "Whether public IPv4 address should be assigned to the MySQL master instance. If set to 'false' then 'var.private_network' must be defined."
   type        = bool
   default     = false
+}
+
+variable "allocated_ip_range" {
+  description = <<-EOT
+  The name of the allocated IP range for the private IP of the CloudSQL instance. 
+  If already available this can be derived from VPC -> Private Service Connection -> Name of the allocated range. For example: "google-managed-services-default".
+  If set, the IP will be created within the allocated IP range. 
+  The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long and match the regular expression a-z?. 
+  If set, a CIDR range of /20 is advised.
+  EOT
+  type        = string
+  default     = null
 }
 
 variable "public_access_read_replica" {
@@ -257,6 +291,11 @@ variable "additional_users" {
   }))
   default = []
 }
+variable "encryption_key_name_read_replica" {
+  description = "Encryption key is required for replicas in different regions. For replicas in same region as master, set encryption_key_name = null"
+  type        = string
+  default     = null
+}
 
 variable "additional_databases" {
   description = "A list of additional databases to be created in the CloudSQL instance"
@@ -285,4 +324,14 @@ variable "maintenance_window" {
     hour_utc     = 19
     update_track = "stable"
   }
+}
+
+variable "insights_config" {
+  description = "The insights_config settings for the database."
+  type = object({
+    query_string_length     = number
+    record_application_tags = bool
+    record_client_address   = bool
+  })
+  default = null
 }
