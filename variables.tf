@@ -218,9 +218,9 @@ variable "public_access_master_instance" {
 
 variable "allocated_ip_range" {
   description = <<-EOT
-  The name of the allocated ip range for the private ip CloudSQL instance. 
-  If already available this can be derived from VPC -> Private Service Connection -> Name of the allocated range
-  For example: "google-managed-services-default". If set, the instance ip will be created in the allocated range. 
+  The name of the allocated IP range for the private IP of the CloudSQL instance. 
+  If already available this can be derived from VPC -> Private Service Connection -> Name of the allocated range. For example: "google-managed-services-default".
+  If set, the IP will be created within the allocated IP range. 
   The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long and match the regular expression a-z?. 
   If set, a CIDR range of /20 is advised.
   EOT
